@@ -1012,7 +1012,7 @@ public class FileUtils extends CordovaPlugin {
             if (f.isDirectory()) {
                 for (File entry:f.listFiles()) {
                     if (entry.getName() != "emulated" && entry.getName() != "self") {
-                        ret.put("externalUSBDirectory", entry.getAbsolutePath()));
+                        ret.put("externalUSBDirectory", entry.getAbsolutePath());
                     }
                 }
             }
