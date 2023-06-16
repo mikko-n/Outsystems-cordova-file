@@ -47,7 +47,9 @@ exports.file = {
     // iOS: Files private to the app, but that are meaningful to other applications (e.g. Office files)
     documentsDirectory: null,
     // BlackBerry10: Files globally available to all apps
-    sharedDirectory: null
+    sharedDirectory: null,
+    // Android: external USB storage root
+    externalUSBDirectory: null
 };
 
 channel.waitForInitialization('onFileSystemPathsReady');

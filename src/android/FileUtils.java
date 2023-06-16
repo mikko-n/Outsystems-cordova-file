@@ -122,7 +122,7 @@ public class FileUtils extends CordovaPlugin {
     }
 
     protected String[] getExtraFileSystemsPreference(Activity activity) {
-        String fileSystemsStr = preferences.getString("androidextrafilesystems", "files,files-external,documents,sdcard,cache,cache-external,assets,root");
+        String fileSystemsStr = preferences.getString("androidextrafilesystems", "files,files-external,documents,sdcard,cache,cache-external,assets,root,storage");
         return fileSystemsStr.split(",");
     }
 
@@ -161,6 +161,15 @@ public class FileUtils extends CordovaPlugin {
             availableFileSystems.put("files-external", context.getExternalFilesDir(null).getAbsolutePath());
             availableFileSystems.put("sdcard", Environment.getExternalStorageDirectory().getAbsolutePath());
             availableFileSystems.put("cache-external", context.getExternalCacheDir().getAbsolutePath());
+
+            File f = new File("file:///storage/");
+            if (f.isDirectory()) {
+                for (File entry:f.listFiles()) {
+                    if (entry.getName() != "emulated" && entry.getName() != "self") {
+                        availableFileSystems.put("storage", entry.getName);                        
+                    }
+                }
+            }            
           }
           catch(NullPointerException e) {
               LOG.d(LOG_TAG, "External storage unavailable, check to see if USB Mass Storage Mode is on");
@@ -998,6 +1007,15 @@ public class FileUtils extends CordovaPlugin {
             ret.put("externalDataDirectory", toDirUrl(context.getExternalFilesDir(null)));
             ret.put("externalCacheDirectory", toDirUrl(context.getExternalCacheDir()));
             ret.put("externalRootDirectory", toDirUrl(Environment.getExternalStorageDirectory()));
+
+            File f = new File("file:///storage/");
+            if (f.isDirectory()) {
+                for (File entry:f.listFiles()) {
+                    if (entry.getName() != "emulated" && entry.getName() != "self") {
+                        ret.put("externalUSBDirectory", entry.getAbsolutePath()));
+                    }
+                }
+            }
           }
           catch(NullPointerException e) {
             /* If external storage is unavailable, context.getExternal* returns null */
