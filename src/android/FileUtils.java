@@ -166,7 +166,7 @@ public class FileUtils extends CordovaPlugin {
             if (f.isDirectory()) {
                 for (File entry:f.listFiles()) {
                     if (entry.getName() != "emulated" && entry.getName() != "self") {
-                        availableFileSystems.put("storage", entry.getName);                        
+                        availableFileSystems.put("storage", entry.getName());                        
                     }
                 }
             }            
